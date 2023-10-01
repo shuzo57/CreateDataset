@@ -1,0 +1,4 @@
+matplotlib
+opencv-python
+Pillow
+ruamel.yaml
