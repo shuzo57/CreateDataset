@@ -3,7 +3,7 @@ import os
 
 import cv2
 
-from config import SAVE_VIDEO_EXTENSION
+from config import EXTRA_TIME, SAVE_VIDEO_EXTENSION
 
 
 def split_video(
@@ -18,6 +18,9 @@ def split_video(
     width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
     height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
 
+    start_frame = start_frame - int(fps * EXTRA_TIME)
+    end_frame = end_frame + int(fps * EXTRA_TIME)
+
     output_dir = os.path.join(output_dir, video_name)
     os.makedirs(output_dir, exist_ok=True)
 
@@ -25,15 +28,14 @@ def split_video(
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     out = cv2.VideoWriter(save_path, fourcc, fps, (int(width), int(height)))
 
-    cap.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
-
     while cap.isOpened():
         ret, frame = cap.read()
         if ret:
             frame_index = int(cap.get(cv2.CAP_PROP_POS_FRAMES))
             if frame_index > end_frame:
                 break
-            out.write(frame)
+            if start_frame <= frame_index <= end_frame:
+                out.write(frame)
         else:
             break
 
