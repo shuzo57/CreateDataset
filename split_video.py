@@ -3,7 +3,8 @@ import os
 
 import cv2
 
-from config import EXTRA_TIME, SAVE_VIDEO_EXTENSION
+EXTRA_TIME = 1.0
+SAVE_VIDEO_EXTENSION = ".mp4"
 
 
 def split_video(
