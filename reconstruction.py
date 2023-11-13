@@ -16,9 +16,6 @@ def reconstruct_video_with_frame_number(
     width, height = video_reader.get_size()
     total_frames = video_reader.get_frame_count()
 
-    output_dir = os.path.join(output_dir, video_reader.get_name())
-    os.makedirs(output_dir, exist_ok=True)
-
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     output_path = os.path.join(
         output_dir, video_reader.get_name() + SAVE_VIDEO_EXTENSION
