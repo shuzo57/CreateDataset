@@ -32,7 +32,7 @@ def split_frame(video_path, save_path):
         video_name = get_video_name(video_path)
         dir_name = get_dir_name(video_path)
         print(f"video_name: {dir_name}_{video_name}")
-        save_dir = os.path.join(save_path, video_name)
+        save_dir = os.path.join(save_path, f"{dir_name}_{video_name}")
         os.makedirs(save_dir, exist_ok=True)
 
         cap = cv2.VideoCapture(video_path)
