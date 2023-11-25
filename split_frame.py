@@ -10,9 +10,13 @@ def get_video_name(video_path):
     return os.path.splitext(os.path.basename(video_path))[0]
 
 
+def get_dir_name(path):
+    return os.path.basename(
+        os.path.dirname(os.path.dirname(os.path.dirname(path)))
+    )
+
+
 def split_frame(video_path, save_path):
-    # video_pathが動画ファイルかどうか、ディレクトリかどうか判定
-    # ディレクトリの場合は、ディレクトリ内の動画ファイルをすべて処理
     if os.path.isdir(video_path):
         video_paths = []
         for ext in video_exts:
@@ -26,7 +30,8 @@ def split_frame(video_path, save_path):
 
     for video_path in video_paths:
         video_name = get_video_name(video_path)
-        print(f"video_name: {video_name}")
+        dir_name = get_dir_name(video_path)
+        print(f"video_name: {dir_name}_{video_name}")
         save_dir = os.path.join(save_path, video_name)
         os.makedirs(save_dir, exist_ok=True)
 
@@ -38,7 +43,9 @@ def split_frame(video_path, save_path):
             if not ret:
                 break
             cv2.imwrite(
-                os.path.join(save_dir, f"{video_name}_{frame_count}.jpg"),
+                os.path.join(
+                    save_dir, f"{dir_name}_{video_name}_{frame_count}.jpg"
+                ),
                 frame,
             )
             frame_count += 1
